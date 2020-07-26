@@ -1,6 +1,6 @@
 package com.example.through.recycler.view;
 
-import android.graphics.drawable.Drawable;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,22 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.through.R;
-import com.example.through.recycler.model.RecyclerImage;
-import com.example.through.recycler.presenter.RecyclerPresenter;
+import com.example.through.recycler.model.PhotoLoader;
+import com.example.through.recycler.presenter.BindRecycler;
 
-import java.util.List;
-
-import moxy.presenter.InjectPresenter;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    private List<Drawable> images;
     private OnClickListenerCounter listenerCounter;
-    private int pos;
+    private PhotoLoader loader;
+    private BindRecycler bindRecycler;
 
 
-    RecyclerAdapter(List<Drawable> images){
-        this.images = images;
+    RecyclerAdapter(Context context, BindRecycler bindRecycler){
+        this.bindRecycler = bindRecycler;
+        loader = new PhotoLoader(context);
     }
 
     @NonNull
@@ -38,9 +36,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        if(images != null){
-            Drawable image = images.get(position);
-            holder.photo.setImageDrawable(image);
+            holder.position = position;
+            bindRecycler.bindView(holder);
             holder.photo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -49,12 +46,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     }
                 }
             });
-        }
+
     }
 
     @Override
     public int getItemCount() {
-        return images.size();
+        return bindRecycler.getItemCount();
     }
 
     public void setListenerCounter(OnClickListenerCounter listenerCounter){
@@ -63,13 +60,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements ISetPhoto{
 
+        private int position;
         private ImageView photo;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             photo = itemView.findViewById(R.id.photo);
+        }
+
+        @Override
+        public void setPhoto(String url) {
+            loader.loadImage(url, photo);
+        }
+
+        @Override
+        public int getPos() {
+            return position;
         }
     }
 

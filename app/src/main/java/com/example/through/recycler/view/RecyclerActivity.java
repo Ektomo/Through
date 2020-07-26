@@ -20,14 +20,21 @@ import java.util.List;
 
 import moxy.MvpAppCompatActivity;
 import moxy.presenter.InjectPresenter;
+import moxy.presenter.ProvidePresenter;
 
 
 public class RecyclerActivity extends MvpAppCompatActivity implements IPosition {
     private RecyclerAdapter adapter;
-    private List<Drawable> images;
+    private String largeUrl;
 
     @InjectPresenter
     RecyclerPresenter presenter;
+
+    @ProvidePresenter
+    public RecyclerPresenter providePresenter(){
+        return new RecyclerPresenter();
+    }
+
     @InjectPresenter
     SecondPresenter secondPresenter;
 
@@ -35,7 +42,6 @@ public class RecyclerActivity extends MvpAppCompatActivity implements IPosition 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler);
-        setList();
         initRecyclerView();
     }
 
@@ -43,7 +49,7 @@ public class RecyclerActivity extends MvpAppCompatActivity implements IPosition 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         GridLayoutManager manager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(manager);
-        adapter = new RecyclerAdapter(images);
+        adapter = new RecyclerAdapter(this, presenter.getSrc());
         adapter.setListenerCounter(listenerCounter);
         recyclerView.setAdapter(adapter);
 
@@ -54,8 +60,11 @@ public class RecyclerActivity extends MvpAppCompatActivity implements IPosition 
         public void iterationCounter(View v, int position) {
                 presenter.onButtonClick();
                 presenter.onRecyclerClick(position);
+                secondPresenter.setLargeUrl(largeUrl);
 
-                startActivity(new Intent(RecyclerActivity.this, SecondActivity.class));
+                Intent intent = new Intent(RecyclerActivity.this, SecondActivity.class);
+                intent.putExtra("URL",largeUrl);
+                startActivity(intent);
                 Log.d("TAG", String.valueOf(presenter.getCount()));
                 Log.d("TAG", "Position: " + position);
         }
@@ -63,20 +72,19 @@ public class RecyclerActivity extends MvpAppCompatActivity implements IPosition 
 
     };
 
-    private List<Drawable> setList(){
-        images = new ArrayList<>();
-        images.add(getDrawable(R.drawable.ic_launcher_background));
-        images.add(getDrawable(R.drawable.ic_launcher_foreground));
-        images.add(getDrawable(R.drawable.ic_launcher_background));
-        images.add(getDrawable(R.drawable.ic_launcher_foreground));
-        images.add(getDrawable(R.drawable.ic_launcher_background));
-        images.add(getDrawable(R.drawable.ic_launcher_foreground));
-        return images;
-    }
 
+    @Override
+    public void largeUrl(String url) {
+        largeUrl = url;
+    }
 
     @Override
     public void setPosition(int pos) {
         secondPresenter.setPosition(pos);
+    }
+
+    @Override
+    public void updateRecyclerView() {
+        adapter.notifyDataSetChanged();
     }
 }
