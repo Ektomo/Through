@@ -1,6 +1,7 @@
 package com.example.through.recycler.model;
 
 public class RecyclerImage {
+
     private int counter = 0;
     private int position;
 
@@ -12,9 +13,7 @@ public class RecyclerImage {
         this.position = position;
     }
 
-    public int getCounter() {
-        return counter;
-    }
+    public int getCounter() { return counter; }
 
     public void setCounter(int counter) {
         this.counter = counter;

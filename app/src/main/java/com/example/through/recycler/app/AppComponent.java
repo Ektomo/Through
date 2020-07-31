@@ -1,0 +1,18 @@
+package com.example.through.recycler.app;
+
+import com.example.through.recycler.model.retrofit.ApiRequest;
+import com.example.through.recycler.presenter.RecyclerPresenter;
+import com.example.through.recycler.presenter.SecondPresenter;
+import com.example.through.recycler.view.RecyclerAdapter;
+
+import javax.inject.Singleton;
+
+import dagger.Component;
+
+@Singleton
+@Component(modules = {AppModule.class})
+public interface AppComponent {
+    void inject(RecyclerPresenter presenter);
+
+    void inject(SecondPresenter presenter);
+}

@@ -30,7 +30,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_view2, parent, false);
         return new ViewHolder(layoutView);
     }
 
@@ -38,12 +38,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
             holder.position = position;
             bindRecycler.bindView(holder);
-            holder.photo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(listenerCounter != null){
-                        listenerCounter.iterationCounter(v, position);
-                    }
+            holder.photo.setOnClickListener(v -> {
+                if(listenerCounter != null){
+                    listenerCounter.iterationCounter(v, position);
                 }
             });
 

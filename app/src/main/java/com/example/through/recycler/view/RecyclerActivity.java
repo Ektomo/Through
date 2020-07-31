@@ -1,7 +1,6 @@
 package com.example.through.recycler.view;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,19 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.through.R;
 import com.example.through.recycler.presenter.RecyclerPresenter;
-import com.example.through.recycler.presenter.SecondPresenter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import moxy.MvpAppCompatActivity;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 
 
-public class RecyclerActivity extends MvpAppCompatActivity implements IPosition {
+public class RecyclerActivity extends MvpAppCompatActivity implements UpdateStates {
     private RecyclerAdapter adapter;
-    private String largeUrl;
 
     @InjectPresenter
     RecyclerPresenter presenter;
@@ -35,8 +29,6 @@ public class RecyclerActivity extends MvpAppCompatActivity implements IPosition 
         return new RecyclerPresenter();
     }
 
-    @InjectPresenter
-    SecondPresenter secondPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,11 +52,9 @@ public class RecyclerActivity extends MvpAppCompatActivity implements IPosition 
         public void iterationCounter(View v, int position) {
                 presenter.onButtonClick();
                 presenter.onRecyclerClick(position);
-                secondPresenter.setLargeUrl(largeUrl);
-
                 Intent intent = new Intent(RecyclerActivity.this, SecondActivity.class);
-                intent.putExtra("URL",largeUrl);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 Log.d("TAG", String.valueOf(presenter.getCount()));
                 Log.d("TAG", "Position: " + position);
         }
@@ -75,12 +65,6 @@ public class RecyclerActivity extends MvpAppCompatActivity implements IPosition 
 
     @Override
     public void largeUrl(String url) {
-        largeUrl = url;
-    }
-
-    @Override
-    public void setPosition(int pos) {
-        secondPresenter.setPosition(pos);
     }
 
     @Override

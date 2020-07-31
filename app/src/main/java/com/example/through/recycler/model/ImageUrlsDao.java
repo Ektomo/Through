@@ -19,6 +19,9 @@ public interface ImageUrlsDao {
     @Query("SELECT * FROM table_urls")
     Single<List<ImageUrls>> getAllUrls();
 
+    @Query("SELECT largeImageURL FROM table_urls")
+    Single<List<String>> getLargeUrls();
+
     @Insert
     Single<List<Long>> insertUrls(List<ImageUrls> urls);
 
