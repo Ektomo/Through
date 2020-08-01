@@ -1,12 +1,10 @@
 package com.example.through.recycler.model;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.example.through.recycler.model.entities.ImageUrls;
-import com.example.through.recycler.model.entities.Photo;
 
 import java.util.List;
 

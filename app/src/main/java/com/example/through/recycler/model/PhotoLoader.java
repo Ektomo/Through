@@ -13,7 +13,7 @@ public class PhotoLoader {
         this.context = context;
     }
 
-    public void loadImage(String url, ImageView imageView){
+    public void loadImage(String url, ImageView imageView) {
         Glide
                 .with(context)
                 .load(url)

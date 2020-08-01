@@ -7,18 +7,14 @@ import com.bumptech.glide.Glide;
 import com.example.through.R;
 import com.example.through.recycler.presenter.SecondPresenter;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import moxy.MvpAppCompatActivity;
 import moxy.presenter.InjectPresenter;
 
 public class SecondActivity extends MvpAppCompatActivity implements UpdateStates {
 
-    private ImageView photo;
-    String url;
-
     @InjectPresenter
     SecondPresenter presenter;
+    private ImageView photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +25,12 @@ public class SecondActivity extends MvpAppCompatActivity implements UpdateStates
     }
 
 
-
     @Override
     public void largeUrl(String url) {
-            Glide
-                    .with(this)
-                    .load(url)
-                    .into(photo);
+        Glide
+                .with(this)
+                .load(url)
+                .into(photo);
     }
 
 

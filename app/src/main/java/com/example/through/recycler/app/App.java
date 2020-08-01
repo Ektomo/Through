@@ -11,6 +11,14 @@ public class App extends Application {
     private static AppDatabase appDatabase;
     private static AppComponent appComponent;
 
+    public static AppComponent getAppComponent() {
+        return appComponent;
+    }
+
+    public static AppDatabase getAppDatabase() {
+        return appDatabase;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -19,18 +27,10 @@ public class App extends Application {
         appComponent = generateComponent();
     }
 
-    public static AppComponent getAppComponent(){
-        return appComponent;
-    }
-
-    public static AppDatabase getAppDatabase(){
-        return appDatabase;
-    }
-
-    private AppComponent generateComponent(){
+    private AppComponent generateComponent() {
         return DaggerAppComponent
                 .builder()
-                .appModule( new AppModule(this))
+                .appModule(new AppModule(this))
                 .build();
     }
 }

@@ -19,19 +19,17 @@ import moxy.MvpPresenter;
 @InjectViewState
 public class SecondPresenter extends MvpPresenter<UpdateStates> {
 
-    private int position;
-    private String largeUrl;
-    private ImageUrlsDao urlsDao;
-
     @Inject
     AppDatabase appDatabase;
     @Inject
     RecyclerImage clickPosition;
+    private int position;
+    private String largeUrl;
+    private ImageUrlsDao urlsDao;
 
-    public SecondPresenter(){
+    public SecondPresenter() {
         App.getAppComponent().inject(this);
         urlsDao = appDatabase.urlsDao();
-//        position = clickPosition.getPosition();
     }
 
     @Override
@@ -42,19 +40,17 @@ public class SecondPresenter extends MvpPresenter<UpdateStates> {
     }
 
 
-    private void loadImage(){
+    private void loadImage() {
         Disposable disposable = urlsDao.getLargeUrls().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(strings -> {
-                largeUrl = strings.get(position);
-                getViewState().largeUrl(largeUrl);
-            }, throwable -> Log.d("TAG", "load image: " + throwable)
+                    largeUrl = strings.get(position);
+                    getViewState().largeUrl(largeUrl);
+                }, throwable -> Log.d("TAG", "load image: " + throwable)
         );
     }
 
-    private void getPosition(){
+    private void getPosition() {
         Disposable disposable = clickPosition.getObservablePosition().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer -> {
-                    position = integer;
-                });
+                .subscribe(integer -> position = integer);
     }
 
 

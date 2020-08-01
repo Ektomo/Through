@@ -4,7 +4,6 @@ import com.example.through.recycler.model.entities.Photo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
@@ -13,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiRequest {
 
-    public Observable<Photo> requestServer(){
+    public Observable<Photo> requestServer() {
 
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()

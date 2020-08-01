@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.through.R;
 import com.example.through.recycler.model.PhotoLoader;
 import com.example.through.recycler.presenter.BindRecycler;
@@ -22,7 +21,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private BindRecycler bindRecycler;
 
 
-    RecyclerAdapter(Context context, BindRecycler bindRecycler){
+    RecyclerAdapter(Context context, BindRecycler bindRecycler) {
         this.bindRecycler = bindRecycler;
         loader = new PhotoLoader(context);
     }
@@ -36,13 +35,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-            holder.position = position;
-            bindRecycler.bindView(holder);
-            holder.photo.setOnClickListener(v -> {
-                if(listenerCounter != null){
-                    listenerCounter.iterationCounter(v, position);
-                }
-            });
+        holder.position = position;
+        bindRecycler.bindView(holder);
+        holder.photo.setOnClickListener(v -> {
+            if (listenerCounter != null) {
+                listenerCounter.iterationCounter(v, position);
+            }
+        });
 
     }
 
@@ -51,13 +50,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return bindRecycler.getItemCount();
     }
 
-    public void setListenerCounter(OnClickListenerCounter listenerCounter){
+    public void setListenerCounter(OnClickListenerCounter listenerCounter) {
         this.listenerCounter = listenerCounter;
     }
 
 
-
-    public class ViewHolder extends RecyclerView.ViewHolder implements ISetPhoto{
+    public class ViewHolder extends RecyclerView.ViewHolder implements ISetPhoto {
 
         private int position;
         private ImageView photo;

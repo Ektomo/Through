@@ -24,25 +24,25 @@ public class AppModule {
 
     @Singleton
     @Provides
-    ApiRequest provideApiRequest(){
+    ApiRequest provideApiRequest() {
         return new ApiRequest();
     }
 
     @Singleton
     @Provides
-    AppDatabase provideDatabase(){
-       return App.getAppDatabase();
+    AppDatabase provideDatabase() {
+        return App.getAppDatabase();
     }
 
     @Singleton
     @Provides
-    RecyclerImage providePosition(){
+    RecyclerImage providePosition() {
         return new RecyclerImage();
     }
 
     @Singleton
     @Provides
-    PhotoLoader provideLoader(Context context){
+    PhotoLoader provideLoader(Context context) {
         return new PhotoLoader(context);
     }
 }
