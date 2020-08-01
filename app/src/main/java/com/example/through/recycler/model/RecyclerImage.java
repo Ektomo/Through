@@ -1,12 +1,18 @@
 package com.example.through.recycler.model;
 
+
+import io.reactivex.Observable;
+import io.reactivex.Single;
+
 public class RecyclerImage {
 
     private int counter = 0;
     private int position;
 
-    public int getPosition() {
-        return position;
+    public Single<Integer> getObservablePosition(){
+        return Single.create(emitter -> {
+            emitter.onSuccess(position);
+        });
     }
 
     public void setPosition(int position) {

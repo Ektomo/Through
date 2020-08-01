@@ -31,22 +31,30 @@ public class SecondPresenter extends MvpPresenter<UpdateStates> {
     public SecondPresenter(){
         App.getAppComponent().inject(this);
         urlsDao = appDatabase.urlsDao();
-        position = clickPosition.getPosition();
+//        position = clickPosition.getPosition();
     }
 
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
+        getPosition();
         loadImage();
     }
 
 
-    public void loadImage(){
+    private void loadImage(){
         Disposable disposable = urlsDao.getLargeUrls().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(strings -> {
                 largeUrl = strings.get(position);
                 getViewState().largeUrl(largeUrl);
             }, throwable -> Log.d("TAG", "load image: " + throwable)
         );
+    }
+
+    private void getPosition(){
+        Disposable disposable = clickPosition.getObservablePosition().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(integer -> {
+                    position = integer;
+                });
     }
 
 
