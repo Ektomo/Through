@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.through.R;
+import com.example.through.recycler.app.App;
 import com.example.through.recycler.presenter.RecyclerPresenter;
 
 import moxy.MvpAppCompatActivity;
@@ -38,13 +39,16 @@ public class RecyclerActivity extends MvpAppCompatActivity implements UpdateStat
 
     @ProvidePresenter
     public RecyclerPresenter providePresenter() {
-        return new RecyclerPresenter();
+        RecyclerPresenter recyclerPresenter = new RecyclerPresenter();
+        App.getAppComponent().inject(recyclerPresenter);
+        return recyclerPresenter;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler);
+        presenter.getCountDb();
         initRecyclerView();
     }
 

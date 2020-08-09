@@ -6,14 +6,14 @@ import io.reactivex.Single;
 public class RecyclerImage {
 
     private int counter = 0;
-    private int position;
+    private Single<Integer> position;
 
     public Single<Integer> getObservablePosition() {
-        return Single.create(emitter -> emitter.onSuccess(position));
+        return position;
     }
 
     public void setPosition(int position) {
-        this.position = position;
+        this.position = Single.just(position);
     }
 
     public int getCounter() {

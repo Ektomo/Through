@@ -2,29 +2,32 @@ package com.example.through.recycler.app;
 
 import android.app.Application;
 
-import androidx.room.Room;
-
-import com.example.through.recycler.model.AppDatabase;
+import com.squareup.leakcanary.LeakCanary;
 
 public class App extends Application {
 
-    private static AppDatabase appDatabase;
     private static AppComponent appComponent;
 
     public static AppComponent getAppComponent() {
         return appComponent;
     }
 
-    public static AppDatabase getAppDatabase() {
-        return appDatabase;
-    }
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "rec_database").build();
+        if (enableLeakCanary()) return;
+
         appComponent = generateComponent();
+    }
+
+    private boolean enableLeakCanary() {
+        if(LeakCanary.isInAnalyzerProcess(this)){
+            return true;
+        }
+        LeakCanary.install(this);
+        return false;
     }
 
     private AppComponent generateComponent() {

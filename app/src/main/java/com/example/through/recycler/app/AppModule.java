@@ -7,6 +7,7 @@ import com.example.through.recycler.model.AppDatabase;
 import com.example.through.recycler.model.PhotoLoader;
 import com.example.through.recycler.model.RecyclerImage;
 import com.example.through.recycler.model.retrofit.ApiRequest;
+import androidx.room.Room;
 
 import javax.inject.Singleton;
 
@@ -31,7 +32,7 @@ public class AppModule {
     @Singleton
     @Provides
     AppDatabase provideDatabase() {
-        return App.getAppDatabase();
+        return Room.databaseBuilder(application.getApplicationContext(), AppDatabase.class, "rec_database").build();
     }
 
     @Singleton

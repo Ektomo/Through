@@ -32,22 +32,17 @@ public class RecyclerPresenter extends MvpPresenter<UpdateStates> {
     ApiRequest apiRequest;
     @Inject
     RecyclerImage position;
-    private RecyclerImage recyclerImage;
     private RecyclerSource src;
     private List<ImageUrls> imageUrls;
     private ImageUrlsDao imageUrlsDao;
     private long count;
 
     public RecyclerPresenter() {
-        App.getAppComponent().inject(this);
         src = new RecyclerSource();
-        recyclerImage = new RecyclerImage();
-        imageUrlsDao = appDatabase.urlsDao();
     }
 
     @Override
     protected void onFirstViewAttach() {
-        getCountDb();
     }
 
     public void getAllImages() {
@@ -66,6 +61,8 @@ public class RecyclerPresenter extends MvpPresenter<UpdateStates> {
                 .subscribe(throwable -> Log.e("TAG", throwable.toString()));
     }
 
+
+
     public void showImage() {
         Disposable disposable = imageUrlsDao.getAllUrls().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(urls -> {
@@ -75,12 +72,13 @@ public class RecyclerPresenter extends MvpPresenter<UpdateStates> {
     }
 
     public void getCountDb() {
+        imageUrlsDao = appDatabase.urlsDao();
         Disposable disposable = imageUrlsDao.getCount().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(aLong -> {
             count = aLong;
 
             if (count == 0) {
                 getAllImages();
-            } else if (count > 20) {
+            } else if (count > 20 ) {
                 deleteAll();
                 getAllImages();
             } else {
@@ -95,18 +93,17 @@ public class RecyclerPresenter extends MvpPresenter<UpdateStates> {
     }
 
     public void onButtonClick() {
-        int count = recyclerImage.getCounter();
+        int count = position.getCounter();
         count++;
-        recyclerImage.setCounter(count);
+        position.setCounter(count);
     }
 
 
     public int getCount() {
-        return recyclerImage.getCounter();
+        return position.getCounter();
     }
 
     public void onRecyclerClick(int pos) {
-        recyclerImage.setPosition(pos);
         position.setPosition(pos);
     }
 
