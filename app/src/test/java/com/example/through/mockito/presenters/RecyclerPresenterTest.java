@@ -105,7 +105,7 @@ public class RecyclerPresenterTest {
             @Override
             public AppDatabase provideAppDataBase() {
                 AppDatabase appDatabase = super.provideAppDataBase();
-                dao = appDatabase.urlsDao();
+//                dao = appDatabase.urlsDao();
                 List<ImageUrls> imageUrls = new ArrayList<>();
                 ImageUrls imageUrl = new ImageUrls();
                 imageUrl.id = 1;
@@ -118,8 +118,8 @@ public class RecyclerPresenterTest {
 //                appDatabase.urlsDao().insertUrls(imageUrls);
 //                doReturn(list).when(imageUrlsDao.insertUrls(Mockito.any()));
 //                Mockito.when(dao.insertUrls(imageUrls)).thenReturn(Single.just(list));
-                Mockito.when(dao.getAllUrls()).thenReturn(Single.just(imageUrls));
-                Mockito.when(dao.insertUrls(Mockito.anyList())).thenReturn(Single.just(list));
+                Mockito.when(appDatabase.urlsDao().getAllUrls()).thenReturn(Single.just(imageUrls));
+                Mockito.when(appDatabase.urlsDao().insertUrls(Mockito.anyList())).thenReturn(Single.just(Mockito.anyList()));
 //                Mockito.when(dao.insertUrls(Mockito.anyList())).thenReturn()
 //                Mockito.doNothing().when(dao.insertUrls(Mockito.anyList()));
                 return appDatabase;

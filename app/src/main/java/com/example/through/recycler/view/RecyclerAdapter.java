@@ -42,7 +42,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 listenerCounter.iterationCounter(v, position);
             }
         });
-
     }
 
     @Override
