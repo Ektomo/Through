@@ -3,11 +3,12 @@ package com.example.through.recycler.app;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.room.Room;
+
 import com.example.through.recycler.model.AppDatabase;
 import com.example.through.recycler.model.PhotoLoader;
 import com.example.through.recycler.model.RecyclerImage;
 import com.example.through.recycler.model.retrofit.ApiRequest;
-import androidx.room.Room;
 
 import javax.inject.Singleton;
 
