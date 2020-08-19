@@ -3,7 +3,6 @@ package com.example.through.recycler.presenter;
 
 import android.util.Log;
 
-import com.example.through.recycler.app.App;
 import com.example.through.recycler.model.AppDatabase;
 import com.example.through.recycler.model.ImageUrlsDao;
 import com.example.through.recycler.model.RecyclerImage;
@@ -51,7 +50,7 @@ public class RecyclerPresenter extends MvpPresenter<UpdateStates> {
         Disposable disposable = single.observeOn(AndroidSchedulers.mainThread()).subscribe(photos -> {
                     imageUrls = photos.imageUrls;
                     loadDatabaseImage();
-                    getViewState().updateRecyclerView();
+                    getViewState().updateState();
                 }, throwable -> Log.e("TAG", throwable.toString())
         );
     }
@@ -62,12 +61,11 @@ public class RecyclerPresenter extends MvpPresenter<UpdateStates> {
     }
 
 
-
     public void showImage() {
         Disposable disposable = imageUrlsDao.getAllUrls().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(urls -> {
                     imageUrls = urls;
-                    getViewState().updateRecyclerView();
+                    getViewState().updateState();
                 }, throwable -> Log.e("TAG", throwable.toString()));
     }
 
@@ -78,7 +76,7 @@ public class RecyclerPresenter extends MvpPresenter<UpdateStates> {
 
             if (count == 0) {
                 getAllImages();
-            } else if (count > 20 ) {
+            } else if (count > 20) {
                 deleteAll();
                 getAllImages();
             } else {

@@ -23,7 +23,7 @@ public class App extends Application {
     }
 
     private boolean enableLeakCanary() {
-        if(LeakCanary.isInAnalyzerProcess(this)){
+        if (LeakCanary.isInAnalyzerProcess(this)) {
             return true;
         }
         LeakCanary.install(this);

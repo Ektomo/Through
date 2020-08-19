@@ -9,5 +9,5 @@ public interface UpdateStates extends MvpView {
 
 
     @StateStrategyType(value = SkipStrategy.class)
-    void updateRecyclerView();
+    void updateState();
 }

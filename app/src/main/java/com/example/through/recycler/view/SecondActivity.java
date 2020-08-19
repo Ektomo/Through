@@ -35,7 +35,7 @@ public class SecondActivity extends MvpAppCompatActivity implements UpdateStates
 
 
     @Override
-    public void updateRecyclerView() {
+    public void updateState() {
 
     }
 

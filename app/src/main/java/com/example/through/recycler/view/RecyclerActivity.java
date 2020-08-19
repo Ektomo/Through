@@ -67,7 +67,7 @@ public class RecyclerActivity extends MvpAppCompatActivity implements UpdateStat
     }
 
     @Override
-    public void updateRecyclerView() {
+    public void updateState() {
         adapter.notifyDataSetChanged();
     }
 }
